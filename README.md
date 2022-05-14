@@ -1,4 +1,4 @@
-# ProgramacaoWeb
+# Programação Web
 Site dinâmico de listagem edição e aluguer de imoveis.
 
 Projeto no âmbito da cadeira de Programação Web
