@@ -1,0 +1,75 @@
+﻿@model IEnumerable<TP.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Reservas</h1>
+
+
+<table class="table table-striped ">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.dataEntrada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dataSaida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imovel)
+            </th>
+            @if (User.IsInRole("Gestor") || User.IsInRole("Admin") || User.IsInRole("Funcionario"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.User)
+                </th>
+            }
+            @if(User.IsInRole("Funcionario") || User.IsInRole("Admin"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model=>model.Confirmar)
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+
+@foreach (var (item,index) in Model.Select((value,i) => (value,i))) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.dataEntrada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dataSaida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imovel.Descricao)
+            </td>
+            @if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
+            {
+                <td>
+                   <a asp-action="Details" asp-controller="Utilizadores"asp-route-id="@ViewBag.listaUsers[index].Id"> @ViewBag.listaUsers[index].UserName</a>
+                </td>
+            }
+            @if(User.IsInRole("Funcionario") || User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Confirmar)
+                    </td>
+                }
+            <td>
+                @if (User.IsInRole("Funcionario") || User.IsInRole("Cliente")) {
+                <a asp-action="Edit" asp-route-id="@item.ReservaId">Edit</a> <span>|</span>
+                <a asp-action="Details" asp-route-id="@item.ReservaId">Details</a>
+                }
+                @if (User.IsInRole("Cliente"))
+                {
+            <span>|</span><a asp-action="Delete" asp-route-id="@item.ReservaId">Delete</a>
+                }
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>

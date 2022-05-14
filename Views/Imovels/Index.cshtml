@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TP.Models.Imovel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Imóveis</h1>
+@if (User.IsInRole("Gestor")) { 
+    <p>
+        <a asp-action="Create">Novo Imóvel</a>
+    </p>
+}
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+          
+        <tr onclick="location.href = '@(Url.Action("Details", "Imovels",new { id = item.ImovelId }))'">
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
